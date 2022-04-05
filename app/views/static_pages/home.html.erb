@@ -1,7 +1,15 @@
-<title><%= yield(:title) %> | Ruby on Rails Tutorial Sample App</title>
-<h1>Sample App</h1>
-<p>
-  This is the home page for the 
-  <a href="https://railstutorial.jp">Ruby On Rails Tutorial</a>
-  sample application.
-</p>
+<% provide(:title, "Home")%>
+<div class="center jumbotron">
+  <h1>Sample App</h1>
+  <h2>
+    This is the home page for the 
+    <a href="https://railstutorial.jp">Ruby On Rails Tutorial</a>
+    sample application.
+  </h2>
+  
+  <%= link_to 'Sign up now!',signup_path, class: "btn btn-lg btn-primary" %>
+</div>
+<div>
+  <% #= img_tag('kitten.jpg', alt: "kitten")%>
+</div>
+<%= link_to image_tag("rails.svg", alt: "Rails logo", width: "200px"), "https://rubyonrails.org/" %>
