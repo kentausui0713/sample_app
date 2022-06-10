@@ -8,4 +8,12 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: {minimum: 5}
   validates :password_confirmation, presence: true, length: {minimum: 6}
+  
+  # usersのfixture(テスト用アカウント作成)のためにパスワードをpassword_digestにするためのメソッド
+  # https://github.com/rails/rails/blob/main/activemodel/lib/active_model/secure_password.rb参照
+  def User.digest(string)
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+                                                  BCrypt::Engine.cost
+    BCrypt::Password.create(string, cost: cost)
+  end
 end
