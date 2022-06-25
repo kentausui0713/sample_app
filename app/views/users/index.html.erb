@@ -1,0 +1,11 @@
+<% provide(:title, 'All users') %>
+<h1>All users</h1>
+
+<%= will_paginate %>
+
+<!--レイアウトがうまくいかないのでオリジナル修正-->
+<!--<ul class="users"></ul>をパーシャル(_user.html.erb)に内包-->
+<%= render @users %>
+
+
+<%= will_paginate %>

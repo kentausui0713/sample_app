@@ -8,8 +8,7 @@ class User < ApplicationRecord
                     format: {with: VALIDATE_EMAIL_REGEX},
                     uniqueness: { case_sensitive: false }
   has_secure_password
-  validates :password, presence: true, length: {minimum: 5}
-  validates :password_confirmation, presence: true, length: {minimum: 6}
+  validates :password, presence: true, length: { minimum: 6}, allow_nil: true
   
   # usersのfixture(テスト用アカウント作成)のためにパスワードをpassword_digestにするためのメソッド
   # https://github.com/rails/rails/blob/main/activemodel/lib/active_model/secure_password.rb参照

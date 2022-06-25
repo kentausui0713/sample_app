@@ -13,9 +13,9 @@ module SessionsHelper
   def current_user
     # session[:user_id]があれば
     if (user_id = session[:user_id])
-      @current_user ||= User.find_by(id: session[:user_id])
+      @current_user ||= User.find_by(id: user_id)
     #cookies.encrypted[:user_id]で暗号化を解除している
-    #Bcryptでの暗号化は復元できないが、encryptedの暗号化は復元できる？
+    #Bcryptでのハッシュ化は復元できないが、encryptedの暗号化は復元できる　→暗号化とハッシュ化の違い（不可逆性）
     # session[:user_id]がない場合にcookies.encrypted[:user_id]があれば
     # （ブラウザを一旦閉じた後にブラウザをもう一度開いた時など）
     elsif(user_id = cookies.encrypted[:user_id])
@@ -25,6 +25,10 @@ module SessionsHelper
         @current_user = user
       end
     end
+  end
+  
+  def current_user?(user)
+    user && user == current_user
   end
   
   def logged_in?
@@ -44,5 +48,17 @@ module SessionsHelper
     session.delete(:user_id)
     @current_user = nil
   end
+  
+  #記憶したURL(もしくはデフォルト値)にリダイレクト
+  def redirect_back_or(default)
+    redirect_to(session[:forwording_url] || default)
+    session.delete(:forwording_url)
+  end
+  
+  # アクセスしようとしたURLを覚える
+  def store_location
+    session[:forwording_url] = request.original_url if request.get?
+  end
+  
   
 end
