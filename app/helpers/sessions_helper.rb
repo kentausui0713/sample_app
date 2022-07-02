@@ -20,7 +20,7 @@ module SessionsHelper
     # （ブラウザを一旦閉じた後にブラウザをもう一度開いた時など）
     elsif(user_id = cookies.encrypted[:user_id])
       user = User.find_by(id: user_id)
-      if user && user.authenticated?(cookies[:remember_token])
+      if user && user.authenticated?(:remember, cookies[:remember_token])
         login user
         @current_user = user
       end
